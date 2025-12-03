@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LC Nematic Phase Detector</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@techstark/opencv-js@4.8.0/opencv.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-microscope"></i> LC Nematic Phase Detector</h1>
+            <p class="subtitle">Upload LC Nematic images to detect Normal vs Anomaly phases</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section card">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Upload Image</h2>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-file-image upload-icon"></i>
+                <p>Drag & drop an image here or click to browse</p>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <button class="btn" id="browseBtn">
+                    <i class="fas fa-folder-open"></i> Browse Files
+                </button>
+                <p class="file-info">Supported formats: JPG, PNG, BMP</p>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <h3><i class="fas fa-sliders-h"></i> Processing Parameters</h3>
+                    
+                    <div class="slider-group">
+                        <label>Bilateral Filter Strength</label>
+                        <input type="range" id="bilateralStrength" min="1" max="20" value="5">
+                        <span id="bilateralValue">5</span>
+                    </div>
+                    
+                    <div class="slider-group">
+                        <label>Threshold Sensitivity</label>
+                        <input type="range" id="thresholdSens" min="5" max="30" value="17">
+                        <span id="thresholdValue">17</span>
+                    </div>
+                    
+                    <div class="slider-group">
+                        <label>Hough Line Sensitivity</label>
+                        <input type="range" id="houghThreshold" min="10" max="100" value="50">
+                        <span id="houghValue">50</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3><i class="fas fa-cog"></i> Detection Rules</h3>
+                    
+                    <div class="slider-group">
+                        <label>Min Lines for Normal</label>
+                        <input type="range" id="minLines" min="1" max="20" value="5">
+                        <span id="minLinesValue">5</span>
+                    </div>
+                    
+                    <div class="slider-group">
+                        <label>Max Angle Variance</label>
+                        <input type="range" id="maxAngleVar" min="100" max="1000" value="500">
+                        <span id="maxAngleValue">500</span>
+                    </div>
+                    
+                    <div class="slider-group">
+                        <label>Min Avg Line Length</label>
+                        <input type="range" id="minAvgLength" min="1" max="50" value="10">
+                        <span id="minLengthValue">10</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <h2><i class="fas fa-chart-line"></i> Analysis Results</h2>
+            
+            <!-- Prediction Card -->
+            <div class="prediction-card card">
+                <div class="prediction-header">
+                    <h3>Phase Prediction</h3>
+                    <div class="prediction-badge" id="predictionBadge">
+                        <span id="predictionText">-</span>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <i class="fas fa-chart-bar"></i>
+                        <div class="stat-value" id="lineCount">0</div>
+                        <div class="stat-label">Lines Detected</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-ruler-combined"></i>
+                        <div class="stat-value" id="avgLength">0</div>
+                        <div class="stat-label">Avg Length (px)</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-angle-double-right"></i>
+                        <div class="stat-value" id="angleVar">0</div>
+                        <div class="stat-label">Angle Variance</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-percentage"></i>
+                        <div class="stat-value" id="accuracy">-</div>
+                        <div class="stat-label">Confidence</div>
+                    </div>
+                </div>
+                
+                <div class="reasons-box" id="reasonsBox">
+                    <h4><i class="fas fa-info-circle"></i> Decision Factors</h4>
+                    <ul id="reasonsList"></ul>
+                </div>
+            </div>
+
+            <!-- Processing Steps -->
+            <div class="processing-steps card">
+                <h3><i class="fas fa-cogs"></i> Processing Steps</h3>
+                <div class="steps-grid">
+                    <div class="step">
+                        <h4>1. Original</h4>
+                        <canvas id="canvasOrig" width="256" height="256"></canvas>
+                    </div>
+                    <div class="step">
+                        <h4>2. Grayscale</h4>
+                        <canvas id="canvasGray" width="256" height="256"></canvas>
+                    </div>
+                    <div class="step">
+                        <h4>3. Bilateral Filter</h4>
+                        <canvas id="canvasBilateral" width="256" height="256"></canvas>
+                    </div>
+                    <div class="step">
+                        <h4>4. Threshold</h4>
+                        <canvas id="canvasThresh" width="256" height="256"></canvas>
+                    </div>
+                    <div class="step">
+                        <h4>5. Hough Lines</h4>
+                        <canvas id="canvasLines" width="256" height="256"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Chart -->
+            <div class="chart-section card">
+                <h3><i class="fas fa-chart-pie"></i> Feature Analysis</h3>
+                <div class="chart-container">
+                    <canvas id="featuresChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section card">
+                <h3><i class="fas fa-download"></i> Export Results</h3>
+                <div class="download-buttons">
+                    <button class="btn btn-secondary" id="downloadReport">
+                        <i class="fas fa-file-pdf"></i> Download Report
+                    </button>
+                    <button class="btn btn-secondary" id="downloadImage">
+                        <i class="fas fa-image"></i> Download Processed Image
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-redo"></i> Analyze Another Image
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <h3>Processing Image...</h3>
+                <p>This may take a few seconds</p>
+                <div class="progress-steps">
+                    <div class="step active"><span>1</span> Loading</div>
+                    <div class="step"><span>2</span> Processing</div>
+                    <div class="step"><span>3</span> Analyzing</div>
+                    <div class="step"><span>4</span> Detecting</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>LC Nematic Phase Detector | Computer Vision Project</p>
+        <p class="footer-links">
+            <a href="#"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#"><i class="fas fa-book"></i> Documentation</a>
+            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
