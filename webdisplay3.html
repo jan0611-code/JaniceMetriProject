@@ -3,662 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klasifikasi Fase Kristal Cair</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Upload Gambar dengan GitHub</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #f5f5f5;
             color: #333;
-        }
-        
-        .container {
+            line-height: 1.6;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
         
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px 0;
+            background-color: #24292e;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
             font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
+        h2 {
+            color: #0366d6;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e1e4e8;
         }
         
-        .main-content {
+        .container {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
-            margin-bottom: 40px;
         }
         
-        .upload-section, .result-section {
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             flex: 1;
             min-width: 300px;
-            background-color: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .section-title {
-            color: #2c3e50;
+        .instructions {
+            flex-basis: 100%;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            font-size: 1.5rem;
         }
         
-        .upload-area {
-            border: 3px dashed #3498db;
-            border-radius: 10px;
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        ol, ul {
+            padding-left: 20px;
             margin-bottom: 20px;
-            background-color: #f8fafc;
         }
         
-        .upload-area:hover {
-            background-color: #e8f4fc;
-            border-color: #2980b9;
-        }
-        
-        .upload-area i {
-            font-size: 60px;
-            color: #3498db;
-            margin-bottom: 15px;
-        }
-        
-        .upload-area p {
-            color: #555;
-            font-size: 1.1rem;
+        li {
             margin-bottom: 10px;
         }
         
-        .upload-area span {
-            color: #7f8c8d;
-            font-size: 0.9rem;
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        .file-input {
-            display: none;
-        }
-        
-        .file-info {
-            padding: 15px;
-            background-color: #f1f8ff;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .file-info.active {
+        label {
             display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
         }
         
-        .file-name {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
+        input[type="text"], 
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
         }
         
-        .file-size {
-            color: #7f8c8d;
-            font-size: 0.9rem;
+        input[type="text"]:focus, 
+        input[type="file"]:focus {
+            border-color: #0366d6;
+            outline: none;
         }
         
-        .btn {
-            background-color: #3498db;
+        button {
+            background-color: #2ea44f;
             color: white;
             border: none;
             padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1rem;
+            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            margin-top: 20px;
-            width: 100%;
         }
         
-        .btn:hover {
-            background-color: #2980b9;
+        button:hover {
+            background-color: #2c974b;
         }
         
-        .btn:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
+        .github-btn {
+            background-color: #24292e;
         }
         
-        .image-preview {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
+        .github-btn:hover {
+            background-color: #444d56;
+        }
+        
+        .preview-area {
+            border: 2px dashed #ddd;
             border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        .image-preview.active {
-            display: block;
-        }
-        
-        .result-content {
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
             min-height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
         
-        .result-placeholder {
-            text-align: center;
-            color: #95a5a6;
-            font-style: italic;
+        .preview-area img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 15px;
         }
         
-        .phase-result {
-            display: none;
-        }
-        
-        .phase-result.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .phase-name {
-            font-size: 1.8rem;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .phase-confidence {
-            font-size: 1.2rem;
-            color: #27ae60;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .phase-description {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .phase-description h4 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .phase-description p {
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .phase-info {
+        .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
         
-        .info-item {
-            background-color: #f1f8ff;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            color: #2c3e50;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .info-value {
-            color: #555;
-        }
-        
-        .examples-section {
-            background-color: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
-        }
-        
-        .examples-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .example-item {
-            border-radius: 10px;
+        .gallery-item {
+            border-radius: 5px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
         
-        .example-item:hover {
+        .gallery-item:hover {
             transform: translateY(-5px);
         }
         
-        .example-img {
+        .gallery-item img {
             width: 100%;
             height: 150px;
             object-fit: cover;
-        }
-        
-        .example-label {
-            padding: 10px;
-            text-align: center;
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .loading.active {
             display: block;
         }
         
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .github-info {
+            background-color: #f6f8fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 4px solid #0366d6;
+        }
+        
+        .github-icon {
+            font-size: 20px;
+            vertical-align: middle;
+        }
+        
+        .flex-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
         @media (max-width: 768px) {
-            .main-content {
+            .container {
                 flex-direction: column;
             }
             
             h1 {
                 font-size: 2rem;
             }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>📷 Upload Gambar dengan GitHub</h1>
+        <p>Upload gambar dan integrasikan dengan repository GitHub Anda</p>
+    </header>
+    
     <div class="container">
-        <header>
-            <h1>Klasifikasi Dua Fase Kristal Cair</h1>
-            <p class="subtitle">
-                Unggah gambar sampel kristal cair untuk mengklasifikasikannya ke dalam salah satu dari dua fase: 
-                <strong>Fase Nematik</strong> atau <strong>Fase Smektik</strong>. Sistem ini menggunakan model pembelajaran mesin 
-                untuk menganalisis pola tekstur gambar.
-            </p>
-        </header>
-        
-        <div class="main-content">
-            <section class="upload-section">
-                <h2 class="section-title">Unggah Gambar</h2>
-                
-                <div class="upload-area" id="uploadArea">
-                    <i class="fas fa-microscope"></i>
-                    <p>Klik untuk mengunggah gambar</p>
-                    <span>Format yang didukung: JPG, PNG, GIF (Maks. 5MB)</span>
-                </div>
-                
-                <input type="file" id="fileInput" class="file-input" accept=".jpg,.jpeg,.png,.gif,.bmp">
-                
-                <div class="file-info" id="fileInfo">
-                    <div class="file-name" id="fileName"></div>
-                    <div class="file-size" id="fileSize"></div>
-                </div>
-                
-                <img id="imagePreview" class="image-preview" src="" alt="Pratinjau gambar">
-                
-                <button id="classifyBtn" class="btn" disabled>
-                    <i class="fas fa-vial"></i> Klasifikasikan Gambar
-                </button>
-                
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Menganalisis gambar, harap tunggu...</p>
-                </div>
-            </section>
-            
-            <section class="result-section">
-                <h2 class="section-title">Hasil Klasifikasi</h2>
-                
-                <div class="result-content">
-                    <div class="result-placeholder" id="resultPlaceholder">
-                        <i class="fas fa-chart-bar" style="font-size: 60px; margin-bottom: 20px; color: #bdc3c7;"></i>
-                        <p>Hasil klasifikasi akan muncul di sini setelah Anda mengunggah dan menganalisis gambar.</p>
-                    </div>
-                    
-                    <div class="phase-result" id="phaseResult">
-                        <div class="phase-name" id="phaseName"></div>
-                        <div class="phase-confidence" id="phaseConfidence"></div>
-                        
-                        <div class="phase-description">
-                            <h4>Deskripsi Fase</h4>
-                            <p id="phaseDescription"></p>
-                        </div>
-                        
-                        <div class="phase-info">
-                            <div class="info-item">
-                                <span class="info-label">Struktur Molekul</span>
-                                <span class="info-value" id="molecularStructure"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Tingkat Keteraturan</span>
-                                <span class="info-value" id="orderLevel"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Respons terhadap Medan Listrik</span>
-                                <span class="info-value" id="electricResponse"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Aplikasi Umum</span>
-                                <span class="info-value" id="commonApplications"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <div class="section instructions">
+            <h2>📋 Cara Menggunakan</h2>
+            <ol>
+                <li>Masukkan informasi repository GitHub Anda (username, nama repo, dan folder)</li>
+                <li>Pilih gambar dari komputer Anda (hanya file JPG, PNG, atau GIF)</li>
+                <li>Klik "Preview Gambar" untuk melihat gambar sebelum upload</li>
+                <li>Buka aplikasi GitHub di perangkat Anda dan lakukan commit gambar ke repository</li>
+                <li>Klik "Load Gambar dari GitHub" untuk melihat gambar yang telah diupload</li>
+            </ol>
+            <div class="github-info">
+                <p><strong>Catatan:</strong> Website ini tidak mengupload langsung ke GitHub, tetapi membantu Anda mengelola gambar yang akan diupload melalui aplikasi GitHub.</p>
+            </div>
         </div>
         
-        <section class="examples-section">
-            <h2 class="section-title">Contoh Gambar Kristal Cair</h2>
-            <p>Klik pada gambar contoh di bawah untuk mencoba sistem klasifikasi:</p>
-            
-            <div class="examples-grid" id="examplesGrid">
-                <!-- Contoh gambar akan dimasukkan via JavaScript -->
+        <div class="section">
+            <h2>⚙️ Konfigurasi GitHub</h2>
+            <div class="form-group">
+                <label for="github-username">Username GitHub</label>
+                <input type="text" id="github-username" placeholder="misal: namauser" value="contoh-user">
             </div>
-        </section>
+            
+            <div class="form-group">
+                <label for="github-repo">Nama Repository</label>
+                <input type="text" id="github-repo" placeholder="misal: gambar-project" value="gallery-website">
+            </div>
+            
+            <div class="form-group">
+                <label for="github-folder">Folder dalam Repository (opsional)</label>
+                <input type="text" id="github-folder" placeholder="misal: images" value="images">
+            </div>
+            
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <input type="text" id="branch" placeholder="misal: main" value="main">
+            </div>
+            
+            <div class="github-info">
+                <p><span class="github-icon">📁</span> URL repository Anda: 
+                <span id="github-url">https://github.com/contoh-user/gallery-website/tree/main/images</span></p>
+            </div>
+        </div>
         
-        <footer>
-            <p>Website Klasifikasi Fase Kristal Cair &copy; 2023 | Dikembangkan untuk Analisis Material Cair</p>
-            <p>Catatan: Sistem ini menggunakan algoritma simulasi untuk keperluan demonstrasi.</p>
-        </footer>
+        <div class="section">
+            <h2>📤 Upload Gambar</h2>
+            <div class="form-group">
+                <label for="image-upload">Pilih Gambar dari Komputer</label>
+                <input type="file" id="image-upload" accept=".jpg,.jpeg,.png,.gif">
+            </div>
+            
+            <div class="flex-buttons">
+                <button id="preview-btn">
+                    <span>👁️</span> Preview Gambar
+                </button>
+                <button id="reset-btn" style="background-color: #6c757d;">
+                    <span>🔄</span> Reset
+                </button>
+            </div>
+            
+            <div class="preview-area" id="preview-area">
+                <p>Gambar akan muncul di sini setelah dipilih</p>
+                <img id="preview-image" src="" alt="Preview Gambar" style="display: none;">
+            </div>
+            
+            <div class="github-info">
+                <p><strong>Langkah upload ke GitHub:</strong></p>
+                <ol>
+                    <li>Simpan gambar yang sudah dipreview ke folder lokal repository GitHub Anda</li>
+                    <li>Buka aplikasi GitHub desktop atau command line</li>
+                    <li>Commit dan push perubahan ke repository GitHub</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📥 Gambar dari GitHub</h2>
+            <p>Setelah mengupload gambar ke repository GitHub, klik tombol di bawah untuk memuat gambar:</p>
+            
+            <button id="load-github-btn" class="github-btn">
+                <span>🐙</span> Load Gambar dari GitHub
+            </button>
+            
+            <div id="github-message" class="message"></div>
+            
+            <h3 style="margin-top: 30px;">🖼️ Galeri Gambar</h3>
+            <p>Gambar yang diambil dari repository GitHub:</p>
+            
+            <div class="gallery" id="gallery">
+                <!-- Gambar akan dimuat di sini -->
+            </div>
+            
+            <div id="gallery-message" class="message">
+                <p>Belum ada gambar yang dimuat. Klik "Load Gambar dari GitHub" untuk menampilkan gambar dari repository Anda.</p>
+            </div>
+        </div>
     </div>
-
+    
     <script>
         // Elemen DOM
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const fileInfo = document.getElementById('fileInfo');
-        const fileName = document.getElementById('fileName');
-        const fileSize = document.getElementById('fileSize');
-        const imagePreview = document.getElementById('imagePreview');
-        const classifyBtn = document.getElementById('classifyBtn');
-        const loading = document.getElementById('loading');
-        const resultPlaceholder = document.getElementById('resultPlaceholder');
-        const phaseResult = document.getElementById('phaseResult');
-        const phaseName = document.getElementById('phaseName');
-        const phaseConfidence = document.getElementById('phaseConfidence');
-        const phaseDescription = document.getElementById('phaseDescription');
-        const molecularStructure = document.getElementById('molecularStructure');
-        const orderLevel = document.getElementById('orderLevel');
-        const electricResponse = document.getElementById('electricResponse');
-        const commonApplications = document.getElementById('commonApplications');
-        const examplesGrid = document.getElementById('examplesGrid');
+        const githubUsername = document.getElementById('github-username');
+        const githubRepo = document.getElementById('github-repo');
+        const githubFolder = document.getElementById('github-folder');
+        const branch = document.getElementById('branch');
+        const githubUrl = document.getElementById('github-url');
         
-        // Data untuk fase kristal cair
-        const phaseData = {
-            nematik: {
-                name: "Fase Nematik",
-                description: "Fase nematik merupakan fase kristal cair yang paling sederhana dengan molekul yang terorientasi pada arah yang sama (director) tetapi tidak memiliki susunan posisional yang teratur. Molekul-molekulnya memiliki orientasi rata-rata yang sama, menciptakan anisotropi optik.",
-                molecularStructure: "Molekul terorientasi dalam satu arah utama (director) tanpa susunan posisional periodik",
-                orderLevel: "Sedang - Orientasional tinggi, posisional rendah",
-                electricResponse: "Cepat - Dapat diubah orientasinya dengan medan listrik rendah",
-                commonApplications: "Layar LCD, termometer, perangkat optik"
-            },
-            smektik: {
-                name: "Fase Smektik",
-                description: "Fase smektik memiliki tingkat keteraturan yang lebih tinggi dibandingkan fase nematik. Molekul-molekulnya tidak hanya terorientasi dalam arah yang sama, tetapi juga tersusun dalam lapisan-lapisan. Beberapa jenis fase smektik memiliki kemiringan molekul dalam lapisan.",
-                molecularStructure: "Molekul tersusun dalam lapisan-lapisan dengan orientasi yang teratur",
-                orderLevel: "Tinggi - Orientasional dan posisional tinggi",
-                electricResponse: "Lambat - Respons lebih lambat karena struktur berlapis",
-                commonApplications: "Display elektro-optik, sensor, perangkat memori"
-            }
-        };
+        const imageUpload = document.getElementById('image-upload');
+        const previewBtn = document.getElementById('preview-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const previewArea = document.getElementById('preview-area');
+        const previewImage = document.getElementById('preview-image');
         
-        // Contoh gambar (dalam format base64 placeholder atau URL online)
-        const exampleImages = [
-            {
-                name: "Nematik 1",
-                phase: "nematik",
-                url: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                name: "Nematik 2",
-                phase: "nematik",
-                url: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                name: "Smektik 1",
-                phase: "smektik",
-                url: "https://images.unsplash.com/photo-1515191107209-c28698631303?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                name: "Smektik 2",
-                phase: "smektik",
-                url: "https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-            }
-        ];
+        const loadGithubBtn = document.getElementById('load-github-btn');
+        const githubMessage = document.getElementById('github-message');
+        const gallery = document.getElementById('gallery');
+        const galleryMessage = document.getElementById('gallery-message');
         
-        // Inisialisasi contoh gambar
-        function initExamples() {
-            examplesGrid.innerHTML = '';
+        // Update URL GitHub saat input berubah
+        function updateGitHubURL() {
+            const username = githubUsername.value || 'namauser';
+            const repo = githubRepo.value || 'repo';
+            const folder = githubFolder.value || '';
+            const branchName = branch.value || 'main';
             
-            exampleImages.forEach((image, index) => {
-                const exampleItem = document.createElement('div');
-                exampleItem.className = 'example-item';
-                exampleItem.innerHTML = `
-                    <img src="${image.url}" alt="${image.name}" class="example-img">
-                    <div class="example-label">${image.name}</div>
+            let url = `https://github.com/${username}/${repo}/tree/${branchName}`;
+            if (folder) {
+                url += `/${folder}`;
+            }
+            
+            githubUrl.textContent = url;
+        }
+        
+        // Inisialisasi URL GitHub
+        updateGitHubURL();
+        
+        // Event listener untuk update URL GitHub
+        githubUsername.addEventListener('input', updateGitHubURL);
+        githubRepo.addEventListener('input', updateGitHubURL);
+        githubFolder.addEventListener('input', updateGitHubURL);
+        branch.addEventListener('input', updateGitHubURL);
+        
+        // Preview gambar yang dipilih
+        previewBtn.addEventListener('click', function() {
+            const file = imageUpload.files[0];
+            
+            if (!file) {
+                showMessage(githubMessage, 'Silakan pilih gambar terlebih dahulu.', 'error');
+                return;
+            }
+            
+            // Validasi tipe file
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                showMessage(githubMessage, 'Hanya file JPG, PNG, atau GIF yang diizinkan.', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                previewArea.innerHTML = '<p>Preview gambar:</p>';
+                previewArea.appendChild(previewImage);
+                
+                // Tampilkan informasi file
+                const fileInfo = document.createElement('div');
+                fileInfo.innerHTML = `
+                    <p><strong>Nama file:</strong> ${file.name}</p>
+                    <p><strong>Ukuran:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+                    <p><strong>Tipe:</strong> ${file.type}</p>
+                    <p><strong>Instruksi:</strong> Simpan file ini ke folder repository GitHub Anda, lalu commit dan push.</p>
+                `;
+                previewArea.appendChild(fileInfo);
+                
+                showMessage(githubMessage, 'Gambar berhasil dipreview. Simpan file ini ke folder repository GitHub Anda.', 'success');
+            };
+            
+            reader.readAsDataURL(file);
+        });
+        
+        // Reset preview
+        resetBtn.addEventListener('click', function() {
+            imageUpload.value = '';
+            previewImage.src = '';
+            previewImage.style.display = 'none';
+            previewArea.innerHTML = '<p>Gambar akan muncul di sini setelah dipilih</p>';
+            githubMessage.style.display = 'none';
+        });
+        
+        // Load gambar dari GitHub (simulasi)
+        loadGithubBtn.addEventListener('click', function() {
+            const username = githubUsername.value || 'contoh-user';
+            const repo = githubRepo.value || 'gallery-website';
+            const folder = githubFolder.value || 'images';
+            const branchName = branch.value || 'main';
+            
+            // Tampilkan pesan loading
+            showMessage(githubMessage, 'Memuat gambar dari GitHub...', 'success');
+            
+            // Simulasi gambar dari GitHub
+            const sampleImages = [
+                {
+                    name: 'gambar1.jpg',
+                    url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+                    desc: 'Pemandangan alam'
+                },
+                {
+                    name: 'gambar2.jpg',
+                    url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                    desc: 'Pegunungan'
+                },
+                {
+                    name: 'gambar3.png',
+                    url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b',
+                    desc: 'Kota malam hari'
+                },
+                {
+                    name: 'gambar4.jpg',
+                    url: 'https://images.unsplash.com/photo-1540206395-68808572332f',
+                    desc: 'Pantai'
+                },
+                {
+                    name: 'gambar5.gif',
+                    url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19',
+                    desc: 'Air terjun'
+                },
+                {
+                    name: 'gambar6.jpg',
+                    url: 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a',
+                    desc: 'Jalan di hutan'
+                }
+            ];
+            
+            // Kosongkan galeri
+            gallery.innerHTML = '';
+            galleryMessage.style.display = 'none';
+            
+            // Tambahkan gambar ke galeri
+            sampleImages.forEach(img => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                
+                const imgElement = document.createElement('img');
+                imgElement.src = img.url;
+                imgElement.alt = img.desc;
+                imgElement.loading = 'lazy';
+                
+                const caption = document.createElement('div');
+                caption.style.padding = '10px';
+                caption.style.backgroundColor = 'white';
+                caption.innerHTML = `
+                    <p><strong>${img.name}</strong></p>
+                    <p style="font-size: 0.9rem; color: #666;">${img.desc}</p>
+                    <p style="font-size: 0.8rem; color: #888;">Dari: ${username}/${repo}/${folder}</p>
                 `;
                 
-                exampleItem.addEventListener('click', () => {
-                    // Simulasi mengunggah gambar contoh
-                    simulateImageUpload(image.url, image.name, image.phase);
-                });
-                
-                examplesGrid.appendChild(exampleItem);
+                galleryItem.appendChild(imgElement);
+                galleryItem.appendChild(caption);
+                gallery.appendChild(galleryItem);
             });
-        }
-        
-        // Simulasi mengunggah gambar contoh
-        function simulateImageUpload(url, name, phase) {
-            // Reset state
-            resetResults();
             
-            // Tampilkan pratinjau
-            imagePreview.src = url;
-            imagePreview.classList.add('active');
-            
-            // Tampilkan info file
-            fileName.textContent = name + ".jpg";
-            fileSize.textContent = "~2.4 MB";
-            fileInfo.classList.add('active');
-            
-            // Aktifkan tombol klasifikasi
-            classifyBtn.disabled = false;
-            
-            // Simpan data fase untuk digunakan saat klasifikasi
-            classifyBtn.dataset.examplePhase = phase;
-        }
-        
-        // Reset hasil klasifikasi
-        function resetResults() {
-            resultPlaceholder.style.display = 'block';
-            phaseResult.classList.remove('active');
-            loading.classList.remove('active');
-        }
-        
-        // Format ukuran file
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-        
-        // Event listener untuk area unggah
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            resetResults();
-            
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                
-                // Validasi tipe file
-                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
-                if (!validTypes.includes(file.type)) {
-                    alert('Format file tidak didukung. Harap unggah file JPG, PNG, GIF, atau BMP.');
-                    return;
-                }
-                
-                // Validasi ukuran file (maks 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Ukuran file terlalu besar. Maksimal 5MB.');
-                    return;
-                }
-                
-                // Tampilkan info file
-                fileName.textContent = file.name;
-                fileSize.textContent = formatFileSize(file.size);
-                fileInfo.classList.add('active');
-                
-                // Tampilkan pratinjau gambar
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.add('active');
-                };
-                reader.readAsDataURL(file);
-                
-                // Aktifkan tombol klasifikasi
-                classifyBtn.disabled = false;
-                
-                // Hapus data contoh jika ada
-                delete classifyBtn.dataset.examplePhase;
-            }
-        });
-        
-        // Event listener untuk tombol klasifikasi
-        classifyBtn.addEventListener('click', () => {
-            // Tampilkan loading
-            loading.classList.add('active');
-            resultPlaceholder.style.display = 'none';
-            
-            // Simulasi waktu pemrosesan
+            // Tampilkan pesan sukses
             setTimeout(() => {
-                // Sembunyikan loading
-                loading.classList.remove('active');
-                
-                // Tentukan fase (simulasi)
-                let detectedPhase;
-                let confidence;
-                
-                // Jika menggunakan contoh, gunakan fase yang sudah diketahui
-                if (classifyBtn.dataset.examplePhase) {
-                    detectedPhase = classifyBtn.dataset.examplePhase;
-                    confidence = (Math.random() * 20 + 80).toFixed(1); // 80-100%
-                } else {
-                    // Untuk file yang diunggah, buat prediksi acak (simulasi)
-                    const random = Math.random();
-                    detectedPhase = random > 0.5 ? 'nematik' : 'smektik';
-                    confidence = (random * 30 + 70).toFixed(1); // 70-100%
-                }
-                
-                // Tampilkan hasil
-                displayResult(detectedPhase, confidence);
-            }, 2000);
+                showMessage(githubMessage, `Berhasil memuat ${sampleImages.length} gambar dari GitHub. Repository: ${username}/${repo}`, 'success');
+            }, 500);
         });
         
-        // Tampilkan hasil klasifikasi
-        function displayResult(phase, confidence) {
-            const data = phaseData[phase];
+        // Fungsi untuk menampilkan pesan
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
             
-            phaseName.textContent = data.name;
-            phaseConfidence.textContent = Tingkat Kepercayaan: ${confidence}%;
-            phaseDescription.textContent = data.description;
-            molecularStructure.textContent = data.molecularStructure;
-            orderLevel.textContent = data.orderLevel;
-            electricResponse.textContent = data.electricResponse;
-            commonApplications.textContent = data.commonApplications;
-            
-            phaseResult.classList.add('active');
+            // Sembunyikan pesan setelah 5 detik
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
         }
         
-        // Inisialisasi saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', () => {
-            initExamples();
-        });
+        // Inisialisasi galeri message
+        galleryMessage.style.display = 'block';
     </script>
 </body>
 </html>
